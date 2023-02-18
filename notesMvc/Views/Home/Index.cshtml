@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model IEnumerable<Note>
+
+<div class="tree">
+    <ul>
+        @foreach (var note in Model.Where(n => n.ParentId == null))
+        {
+            <li>
+                @Html.DisplayFor(m => note.Title)
+                <ul>
+                    @foreach (var child in Model.Where(n => n.ParentId == note.Id))
+                    {
+                        <li>
+                            @Html.DisplayFor(m => child.Title)
+                            @Html.ActionLink("Edit", "Edit", new { id = child.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = child.Id })
+                        </li>
+                    }
+                    <li>
+                        @Html.ActionLink("Add new note", "Create", new { parentId = note.Id })
+                    </li>
+                </ul>
+            </li>
+        }
+    </ul>
+</div>
