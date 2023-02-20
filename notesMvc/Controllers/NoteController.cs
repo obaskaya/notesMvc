@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using notesMvc.Data;
 using notesMvc.Models;
 
@@ -16,7 +17,7 @@ namespace notesMvc.Controllers
 
         public IActionResult Index()
         {
-            var notes = _context.Notes.ToList();
+            var notes = _context.Notes.Include(n => n.Parent).ToList();
             return View(notes);
         }
 
